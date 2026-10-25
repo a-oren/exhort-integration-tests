@@ -25,10 +25,10 @@ from common_test_functions import (
 )
 
 # Ecosystems whose JavaScript-client analysis reads manifests/lockfiles directly
-# without a package-manager runtime.
+# without a package-manager runtime
 # Only the JavaScript client reads lockfiles directly; the Java client's
 # JavaScript-ecosystem providers still invoke package managers (see language guard below).
-LOCKFILE_ONLY_RUNTIMES = {"npm", "yarn-classic", "yarn-berry", "pnpm"}
+LOCKFILE_ONLY_RUNTIMES = {"npm", "yarn-classic", "yarn-berry", "pnpm", "bun"}
 
 def run_no_runtime_test(language: str, cli_dir: str, runtime: str) -> bool:
     """Run the no-runtime test for a specific runtime."""
@@ -45,9 +45,10 @@ def run_no_runtime_test(language: str, cli_dir: str, runtime: str) -> bool:
         print(f"Simple scenario not found for runtime: {runtime}")
         return True
     
-    # The JavaScript client reads lockfiles directly, so npm/yarn/pnpm succeed without a
-    # runtime; everything else (and every ecosystem for the Java client, whose JS-ecosystem
-    # providers still invoke package managers) must still fail when no runtime is available.
+    # The JavaScript client reads lockfiles directly, so npm/yarn-classic/yarn-berry/pnpm/bun
+    # succeed without a runtime; everything else (and every ecosystem for the Java client, whose
+    # JS-ecosystem providers still invoke package managers) must still fail when no runtime is
+    # available.
     expect_success = (
         language == "javascript"
         and runtime.lower() in LOCKFILE_ONLY_RUNTIMES

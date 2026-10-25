@@ -155,6 +155,13 @@ case "$RUNTIME" in
     echo "Installed skopeo version:"
     skopeo --version
     ;;
+  "bun")
+    echo "Installing bun..."
+    # Install bun via npm (cross-platform; Node is already set up for the JS client).
+    npm install -g bun
+    echo "Installed bun version:"
+    bun --version
+    ;;
   "none")
     echo "No additional runtime setup required."
     ;;
